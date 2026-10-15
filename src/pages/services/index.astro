@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { services } from '../../data/site';
+import { pageGraph } from '../../lib/schema';
+
+const title = 'Gas and heating services | JPS Gas & Heating';
+const description =
+  'Boiler installs, servicing, repairs, landlord certificates, central heating, power flushing and plumbing in the Southend area.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services/' },
+]);
+---
+
+<Base title={title} description={description} path="/services/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Services</span>
+    </nav>
+    <p class="eyebrow">The list he publishes</p>
+    <h1>Services</h1>
+    <p class="lede">These are the jobs on Joe’s advert and his MyJobQuote profile. If yours is not here, call and ask. He will say if it is his work.</p>
+  </section>
+  <section class="section wrap">
+    <div class="card-grid">
+      {
+        services.map((item) => (
+          <a class="card" href={`/services/${item.slug}/`}>
+            <h2>{item.title}</h2>
+            <p>{item.summary}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

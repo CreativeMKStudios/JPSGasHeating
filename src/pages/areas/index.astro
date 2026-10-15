@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { areas, site } from '../../data/site';
+import { pageGraph } from '../../lib/schema';
+
+const title = 'Areas covered | JPS Gas & Heating';
+const description =
+  'JPS Gas & Heating covers Great Wakering and the Southend-on-Sea area, including Shoeburyness, Leigh-on-Sea, Westcliff and Rochford.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'Areas', path: '/areas/' },
+]);
+---
+
+<Base title={title} description={description} path="/areas/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Areas</span>
+    </nav>
+    <p class="eyebrow">Local round</p>
+    <h1>Great Wakering<br />and Southend.</h1>
+    <p class="lede">
+      Joe is based at {site.address.street}, {site.address.locality}, {site.address.postcode}. His profile says he covers the Southend-on-Sea area. The towns below are that area, plus the villages next to base. If you are further out, ask before you book.
+    </p>
+  </section>
+  <section class="section wrap">
+    <div class="card-grid">
+      {
+        areas.map((area) => (
+          <a class="card" href={`/areas/${area.slug}/`}>
+            <h2>{area.name}</h2>
+            <p>{area.lead}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

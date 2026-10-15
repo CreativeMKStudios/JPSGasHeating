@@ -1,0 +1,14 @@
+---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<span class="logo-mark">
+  <img src="/flame.webp" width="36" height="36" alt="" />
+  <span>
+    <strong>JPS</strong>
+    {!compact && <small>GAS & HEATING</small>}
+  </span>
+</span>

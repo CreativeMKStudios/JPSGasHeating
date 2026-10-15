@@ -1,0 +1,31 @@
+---
+import Logo from './Logo.astro';
+import { addressLine, nav, site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bar">
+      <a class="logo" href="/" aria-label="JPS Gas & Heating home">
+        <Logo />
+      </a>
+      <div>
+        <strong>{site.tagline}</strong>
+        <div class="muted">{addressLine}</div>
+      </div>
+      <div>
+        <a href={`tel:${site.phoneTel}`}><strong>{site.phoneDisplay}</strong></a>
+        <div><a href={`mailto:${site.email}`}>{site.email}</a></div>
+      </div>
+    </div>
+    <hr class="rule" style="margin:18px 0" />
+    <nav class="footer-links" aria-label="Footer">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href="/privacy/">Privacy</a>
+      <a href={site.mapsUrl}>Google profile</a>
+    </nav>
+    <p class="fine">
+      {site.name} is a sole trader based in Great Wakering. Gas work is carried out by a Gas Safe registered engineer, as advertised. Ask to see the Gas Safe card on arrival. If you smell gas, call 0800 111 999.
+    </p>
+  </div>
+</footer>

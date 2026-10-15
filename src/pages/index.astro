@@ -1,0 +1,205 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { areas, projects, review, services, site } from '../data/site';
+import { pageGraph } from '../lib/schema';
+import banner from '../assets/photos/google-banner.png';
+import ideal from '../assets/photos/ideal-combi.jpg';
+import cupboard from '../assets/photos/cylinder-cupboard.jpg';
+import loft from '../assets/photos/loft-plant.jpg';
+
+const photos = { ideal, cupboard, loft };
+const title = 'JPS Gas & Heating | Boiler engineer in Great Wakering';
+const description =
+  'Gas Safe registered engineer in Great Wakering. Boiler installs, servicing, repairs and landlord checks across the Southend area. Call 07971 463002.';
+
+const schema = pageGraph(
+  [{ name: 'Home', path: '/' }],
+  [
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Where is JPS Gas & Heating based?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '59 Kingfisher Street, Great Wakering, Southend-on-Sea, SS3 0FS. Joe covers the Southend area from there.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I book?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Call or WhatsApp 07971 463002, or email jpsgasandheating@hotmail.co.uk. Quote Service26 for the offer on the advert.',
+          },
+        },
+      ],
+    },
+  ],
+);
+---
+
+<Base title={title} description={description} path="/" schema={schema}>
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Great Wakering and the Southend area</p>
+      <h1>Boilers.<br />Servicing.<br />Repairs.</h1>
+      <p class="lede">
+        Joe is a gas and heating engineer on Kingfisher Street in Great Wakering. He has {site.yearsInTrade} years in the trade. JPS has been trading since {site.established}.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href={`tel:${site.phoneTel}`}>Call {site.phoneDisplay}</a>
+        <a class="btn btn-ghost" href={site.whatsapp}>WhatsApp Joe</a>
+      </div>
+    </div>
+    <figure class="banner-frame">
+      <Image
+        src={banner}
+        alt="JPS Gas & Heating advert: boilers supplied and fitted, servicing, repairs and callouts. Phone 07971 463002. Based in Great Wakering."
+        widths={[480, 768, 1100]}
+        sizes="(min-width: 900px) 46vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
+  </section>
+
+  <section class="wrap" aria-label="What the business stands by">
+    <div class="fact-row">
+      <div class="fact">
+        <b>Since {site.established}</b>
+        <span>Trading, with {site.yearsInTrade} years in the trade.</span>
+      </div>
+      <div class="fact">
+        <b>Gas Safe</b>
+        <span>Registered, as advertised. Ask to see the card.</span>
+      </div>
+      <div class="fact">
+        <b>Insured</b>
+        <span>Fully insured, and workmanship guaranteed.</span>
+      </div>
+      <div class="fact">
+        <b>{site.googleRating} on Google</b>
+        <span>Shown on the Google profile. One written review on MyJobQuote.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Work Joe takes</p>
+        <h2>Services</h2>
+      </div>
+      <a href="/services/">All services</a>
+    </div>
+    <div class="service-index">
+      {
+        services.slice(0, 6).map((item, index) => (
+          <a class="service-row" href={`/services/${item.slug}/`}>
+            <em>{String(index + 1).padStart(2, '0')}</em>
+            <span>
+              <strong>{item.nav}</strong>
+              {item.summary}
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">How a job starts</p>
+          <h2>Three plain steps</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <b>01</b>
+          <h3>Call or message</h3>
+          <p class="muted">Phone, WhatsApp or email. Say the town, the boiler make, and what has gone wrong.</p>
+        </article>
+        <article class="step">
+          <b>02</b>
+          <h3>A time is set</h3>
+          <p class="muted">Joe replies himself. Matt’s review says he turned up on time and explained the work.</p>
+        </article>
+        <article class="step">
+          <b>03</b>
+          <h3>The job is priced</h3>
+          <p class="muted">You get a price before the work goes ahead. Quote {site.offerCode} for the offer on the advert.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">On the tools</p>
+        <h2>Recent work</h2>
+      </div>
+      <a href="/projects/">Project photos</a>
+    </div>
+    <div class="photo-grid">
+      {
+        projects.slice(0, 3).map((item) => (
+          <figure class="shot">
+            <Image src={photos[item.image as keyof typeof photos]} alt={item.alt} widths={[400, 700]} sizes="(min-width: 900px) 30vw, 100vw" />
+            <figcaption>
+              <strong>{item.title}. </strong>
+              {item.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="quote">
+      <p class="stars" aria-label="5 out of 5 stars">★★★★★</p>
+      <blockquote>
+        <p>{review.body}</p>
+      </blockquote>
+      <footer>
+        {review.author}, {review.dateLabel}, via <a href={review.sourceUrl}>{review.source}</a>.
+        Google shows {site.googleRating} stars on the <a href={site.mapsUrl}>business profile</a>.
+      </footer>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Where Joe works</p>
+        <h2>The Southend area</h2>
+      </div>
+      <a href="/areas/">Areas we cover</a>
+    </div>
+    <p class="lede">Based in Great Wakering. The trade profile says the Southend-on-Sea area. These are the places that means.</p>
+    <div class="area-cloud" style="margin-top:18px">
+      {areas.map((area) => <a href={`/areas/${area.slug}/`}>{area.name}</a>)}
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap band-inner">
+      <div>
+        <p class="eyebrow">Book a visit</p>
+        <h2>Call Joe today</h2>
+        <p class="muted">If you smell gas, leave the house and call 0800 111 999 first.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>
+        <a class="btn btn-ghost" href="/contact/">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Base>

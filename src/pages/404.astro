@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const title = 'Page not found | JPS Gas & Heating';
+const description = 'That page is not on the JPS Gas & Heating site. Try the services list or call 07971 463002.';
+---
+
+<Base title={title} description={description} path="/404/" noindex={true}>
+  <section class="wrap page-hero">
+    <p class="eyebrow">404</p>
+    <h1>This page<br />is not here.</h1>
+    <p class="lede">The link may be old. The services, areas and contact pages are the useful ones.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Home</a>
+      <a class="btn btn-ghost" href="/services/">Services</a>
+      <a class="btn btn-ghost" href={`tel:${site.phoneTel}`}>Call {site.phoneDisplay}</a>
+    </div>
+  </section>
+</Base>

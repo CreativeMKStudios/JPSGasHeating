@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import { services, site, type Service } from '../../data/site';
+import { businessId, pageGraph } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const path = `/services/${service.slug}/`;
+const title = `${service.title} | JPS Gas & Heating`;
+const schema = pageGraph(
+  [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.title, path },
+  ],
+  [
+    {
+      '@type': 'Service',
+      name: service.title,
+      serviceType: service.title,
+      description: service.lead,
+      url: new URL(path, site.url).href,
+      provider: { '@id': businessId },
+      areaServed: 'Southend-on-Sea',
+    },
+    ...(service.faqs.length
+      ? [
+          {
+            '@type': 'FAQPage',
+            mainEntity: service.faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.q,
+              acceptedAnswer: { '@type': 'Answer', text: faq.a },
+            })),
+          },
+        ]
+      : []),
+  ],
+);
+---
+
+<Base title={title} description={service.meta} path={path} schema={schema}>
+  <article class="wrap page-hero prose">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="/services/">Services</a>
+      <span aria-hidden="true">/</span>
+      <span>{service.title}</span>
+    </nav>
+    <p class="eyebrow">JPS Gas & Heating</p>
+    <h1>{service.title}</h1>
+    <p class="lede">{service.lead}</p>
+    {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <h2>What is included</h2>
+    <ul class="checklist">
+      {service.includes.map((item) => <li>{item}</li>)}
+    </ul>
+  </article>
+
+  {
+    service.faqs.length > 0 && (
+      <section class="section wrap faq">
+        <h2>Questions</h2>
+        {service.faqs.map((faq) => (
+          <details>
+            <summary>{faq.q}</summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </section>
+    )
+  }
+
+  <section class="band">
+    <div class="wrap band-inner">
+      <div>
+        <h2>Book this job</h2>
+        <p class="muted">Call {site.phoneDisplay} or send a WhatsApp with a photo of the appliance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href={`tel:${site.phoneTel}`}>Call</a>
+        <a class="btn btn-ghost" href="/contact/">Contact form</a>
+      </div>
+    </div>
+  </section>
+</Base>
