@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { projects } from '../data/site';
+import { pageGraph } from '../lib/schema';
+import ideal from '../assets/photos/ideal-combi.jpg';
+import cupboard from '../assets/photos/cylinder-cupboard.jpg';
+import loft from '../assets/photos/loft-plant.jpg';
+import loftWide from '../assets/photos/loft-wide.jpg';
+
+const images = { ideal, cupboard, loft, loftWide };
+const title = 'Heating project photos | JPS Gas & Heating';
+const description =
+  'Photos of boiler and cylinder work by JPS Gas & Heating: a combi install, a cupboard cylinder, and a loft plant room.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'Projects', path: '/projects/' },
+]);
+---
+
+<Base title={title} description={description} path="/projects/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Projects</span>
+    </nav>
+    <p class="eyebrow">From the trade gallery</p>
+    <h1>Work,<br />not a brochure.</h1>
+    <p class="lede">
+      These photos are from Joe’s MyJobQuote gallery. Street names are not published with them, so none are invented here. What you can see is the pipework, the boilers and the cylinders.
+    </p>
+  </section>
+  <section class="section wrap">
+    <div class="card-grid">
+      {
+        projects.map((item) => (
+          <figure class="shot">
+            <Image
+              src={images[item.image]}
+              alt={item.alt}
+              widths={[480, 800]}
+              sizes="(min-width: 900px) 32vw, 100vw"
+            />
+            <figcaption>
+              <strong>{item.title}. </strong>
+              {item.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+</Base>

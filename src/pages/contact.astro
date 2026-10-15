@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { addressLine, site } from '../data/site';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Contact JPS Gas & Heating | 07971 463002';
+const description =
+  'Call, WhatsApp or email Joe at JPS Gas & Heating in Great Wakering. 59 Kingfisher Street, Southend-on-Sea, SS3 0FS.';
+const schema = pageGraph(
+  [
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact/' },
+  ],
+  [
+    {
+      '@type': 'ContactPage',
+      name: 'Contact JPS Gas & Heating',
+      url: `${site.url}/contact/`,
+    },
+  ],
+);
+---
+
+<Base title={title} description={description} path="/contact/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Contact</span>
+    </nav>
+    <p class="eyebrow">Talk to Joe</p>
+    <h1>Call, message,<br />or email.</h1>
+  </section>
+  <section class="section wrap contact-grid">
+    <div class="prose">
+      <p class="lede">The fastest way is the phone. WhatsApp is on the same number.</p>
+      <p><a href={`tel:${site.phoneTel}`}><strong>{site.phoneDisplay}</strong></a></p>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p>{addressLine}</p>
+      <p>Plus code: {site.plusCode}</p>
+      <p><a href={site.mapsUrl}>Directions on Google Maps</a></p>
+      <p class="safety">
+        <strong>Smell gas?</strong> Do not use a switch. Leave the building. Call the National Gas Emergency Service on <a href="tel:0800111999">0800 111 999</a>. Call Joe after the supply is safe.
+      </p>
+      <p>Quote <strong>{site.offerCode}</strong> when you ask for a price. That code is printed on the Google advert.</p>
+    </div>
+    <QuoteForm />
+  </section>
+</Base>

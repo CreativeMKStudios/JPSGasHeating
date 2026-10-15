@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { review, site } from '../data/site';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Reviews | JPS Gas & Heating';
+const description =
+  'Matt gave JPS Gas & Heating 5 stars on MyJobQuote in April 2026. Google shows 5.0 on the Great Wakering profile.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'Reviews', path: '/reviews/' },
+]);
+---
+
+<Base title={title} description={description} path="/reviews/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Reviews</span>
+    </nav>
+    <p class="eyebrow">What is public</p>
+    <h1>One written<br />review. Five stars.</h1>
+    <p class="lede">
+      There is one published written review. It is on MyJobQuote, not copied from somewhere else. Google’s profile shows {site.googleRating} stars and does not list written comments in the public panel.
+    </p>
+  </section>
+  <section class="section wrap">
+    <div class="quote">
+      <p class="stars" aria-label="5 out of 5 stars">★★★★★</p>
+      <blockquote>
+        <p>{review.body}</p>
+      </blockquote>
+      <footer>
+        <strong>{review.author}</strong>, {review.dateLabel}. Source: <a href={review.sourceUrl}>{review.source}</a>.
+      </footer>
+    </div>
+    <div class="card-grid" style="margin-top:18px">
+      <article class="card">
+        <h2>MyJobQuote</h2>
+        <p>5 out of 5, from 1 review. Profile joined April 2026. Established date on the profile: {site.established}. ID checked.</p>
+        <p><a href={site.myjobquote}>Open the profile</a></p>
+      </article>
+      <article class="card">
+        <h2>Google</h2>
+        <p>{site.googleRating} stars on the gas engineer listing for 59 Kingfisher Street. Written Google reviews were not shown on the public panel.</p>
+        <p><a href={site.mapsUrl}>Open the Google profile</a></p>
+      </article>
+      <article class="card">
+        <h2>Leave a review</h2>
+        <p>If Joe has done a job for you, a Google review helps the next person. Use the profile link. This site does not invent ratings.</p>
+      </article>
+    </div>
+  </section>
+</Base>

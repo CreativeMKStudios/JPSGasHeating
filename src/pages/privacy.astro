@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Privacy | JPS Gas & Heating';
+const description = 'How JPS Gas & Heating handles calls, emails and WhatsApp messages. This website does not use tracking cookies.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'Privacy', path: '/privacy/' },
+]);
+---
+
+<Base title={title} description={description} path="/privacy/" schema={schema}>
+  <article class="wrap page-hero prose">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>Privacy</span>
+    </nav>
+    <h1>Privacy</h1>
+    <p class="lede">This page says what happens to your details. It is written in plain English.</p>
+    <h2>Who has the details</h2>
+    <p>
+      {site.name} is Joe, a sole trader at {site.address.street}, {site.address.locality}, {site.address.postcode}. Email {site.email}. Phone {site.phoneDisplay}.
+    </p>
+    <h2>This website</h2>
+    <p>
+      The site does not use tracking cookies and does not run adverts. It does not keep a copy of the contact form. The email button opens your own email app. The WhatsApp button opens WhatsApp. Those companies then handle the message under their own rules.
+    </p>
+    <h2>Messages you send</h2>
+    <p>
+      If you call, email or WhatsApp about a job, Joe keeps what he needs to reply, book the visit, and do the work. He does not sell your details. He does not add you to a mailing list.
+    </p>
+    <h2>How long</h2>
+    <p>
+      Job notes and invoices are kept for as long as the tax rules and any warranty need them. Ask Joe if you want a copy of what he holds, or if you want a mistake corrected.
+    </p>
+    <h2>Maps and reviews</h2>
+    <p>
+      Links to Google and MyJobQuote leave this site. Their pages have their own privacy notices.
+    </p>
+  </article>
+</Base>

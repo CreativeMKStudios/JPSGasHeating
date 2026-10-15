@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro';
+import { areas, services, site, type Area } from '../../data/site';
+import { businessId, pageGraph } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({
+    params: { slug: area.slug },
+    props: { area },
+  }));
+}
+
+interface Props {
+  area: Area;
+}
+
+const { area } = Astro.props;
+const path = `/areas/${area.slug}/`;
+const title = `Gas engineer in ${area.name} | JPS Gas & Heating`;
+const others = areas.filter((item) => item.slug !== area.slug);
+const schema = pageGraph(
+  [
+    { name: 'Home', path: '/' },
+    { name: 'Areas', path: '/areas/' },
+    { name: area.name, path },
+  ],
+  [
+    {
+      '@type': 'Service',
+      name: `Gas and heating in ${area.name}`,
+      serviceType: 'Gas and heating engineer',
+      description: area.lead,
+      areaServed: {
+        '@type': 'City',
+        name: area.name,
+      },
+      provider: { '@id': businessId },
+      url: new URL(path, site.url).href,
+    },
+  ],
+);
+---
+
+<Base title={title} description={area.meta} path={path} schema={schema}>
+  <article class="wrap page-hero prose">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="/areas/">Areas</a>
+      <span aria-hidden="true">/</span>
+      <span>{area.name}</span>
+    </nav>
+    <p class="eyebrow">Southend area</p>
+    <h1>Gas and heating in {area.name}</h1>
+    <p class="lede">{area.lead}</p>
+    {area.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <h2>Jobs in {area.name}</h2>
+    <ul class="checklist">
+      {services.slice(0, 6).map((item) => (
+        <li><a href={`/services/${item.slug}/`}>{item.title}</a>. {item.summary}</li>
+      ))}
+    </ul>
+    <p>
+      Call <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a> and say you are in {area.name}. Or use the <a href="/contact/">contact form</a>.
+    </p>
+  </article>
+  <section class="section wrap">
+    <h2>Nearby</h2>
+    <div class="area-cloud" style="margin-top:16px">
+      {others.map((item) => <a href={`/areas/${item.slug}/`}>{item.name}</a>)}
+    </div>
+  </section>
+</Base>

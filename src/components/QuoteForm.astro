@@ -1,0 +1,43 @@
+---
+import { site } from '../data/site';
+---
+
+<form class="panel" id="quote-form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+  <h2>Ask for a price</h2>
+  <p class="muted">Quote <strong>{site.offerCode}</strong> if you want the offer on the advert. This form opens your email app. Nothing is stored on the website.</p>
+  <label for="name">Your name</label>
+  <input id="name" name="name" autocomplete="name" required />
+  <label for="phone">Phone</label>
+  <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+  <label for="town">Town and postcode</label>
+  <input id="town" name="town" autocomplete="postal-code" required />
+  <label for="job">What do you need?</label>
+  <textarea id="job" name="job" required placeholder="Boiler make, what has stopped, or the job you want done."></textarea>
+  <label for="when">When suits you?</label>
+  <input id="when" name="when" />
+  <div class="actions">
+    <button class="btn btn-primary" type="submit">Email Joe</button>
+    <button class="btn btn-ghost" type="button" id="whatsapp-send">Send on WhatsApp</button>
+  </div>
+  <p class="form-note">Or call <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+</form>
+
+<script>
+  const form = document.querySelector('#quote-form');
+  const button = document.querySelector('#whatsapp-send');
+  button?.addEventListener('click', () => {
+    if (!(form instanceof HTMLFormElement)) return;
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const text = [
+      'Hello Joe, I would like a quote.',
+      `Name: ${data.get('name')}`,
+      `Phone: ${data.get('phone')}`,
+      `Place: ${data.get('town')}`,
+      `Job: ${data.get('job')}`,
+      `When: ${data.get('when') || 'Not set'}`,
+      'Code: Service26',
+    ].join('\n');
+    window.location.href = `https://wa.me/447971463002?text=${encodeURIComponent(text)}`;
+  });
+</script>

@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { addressLine, site } from '../data/site';
+import { pageGraph } from '../lib/schema';
+import mat from '../assets/photos/work-mat.jpg';
+import banner from '../assets/photos/google-banner.png';
+
+const title = 'About Joe | JPS Gas & Heating';
+const description =
+  'JPS Gas & Heating is Joe, a sole trader in Great Wakering. Trading since 2004, with 26 years in gas and heating. Call 07971 463002.';
+const schema = pageGraph([
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about/' },
+]);
+---
+
+<Base title={title} description={description} path="/about/" schema={schema}>
+  <section class="wrap page-hero">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span>About</span>
+    </nav>
+    <p class="eyebrow">A one-man firm</p>
+    <h1>Joe.<br />On the tools<br />since 2004.</h1>
+  </section>
+
+  <section class="section wrap split">
+    <div class="prose">
+      <p class="lede">
+        JPS Gas & Heating is a sole trader. The engineer is Joe. The business has been trading since {site.established}. He has {site.yearsInTrade} years in the trade.
+      </p>
+      <p>
+        The base is {addressLine}. Google lists the business as a gas engineer. The public profile has no separate website, which is why this one carries the same phone number, email and address.
+      </p>
+      <p>
+        His own words on MyJobQuote: trustworthy, tidy, and experienced. The work covers the Southend-on-Sea area. Most of it is boilers, servicing, landlord gas safety certificates, full central heating, unvented cylinders, power flushing, heating controls and general plumbing repairs.
+      </p>
+      <p>
+        The advert also says the firm is fully insured, Gas Safe registered, and that workmanship is guaranteed. Ask what the workmanship promise covers for your job, and ask to see the Gas Safe card when Joe arrives. You can check an engineer on the <a href="https://www.gassaferegister.co.uk/">Gas Safe Register</a>.
+      </p>
+      <p>
+        MyJobQuote ID-checked the profile. There is one written review, from Matt, dated 17 April 2026. Google shows a {site.googleRating} star mark on the listing.
+      </p>
+      <p>
+        <a href="/contact/">Book a visit</a> or read the <a href="/services/">service list</a>.
+      </p>
+    </div>
+    <figure class="shot">
+      <Image src={mat} alt="Navy work mat printed JPS Gas and Heating, 07971 463002, laid in front of a hot water cylinder." widths={[480, 800]} sizes="(min-width: 900px) 40vw, 100vw" />
+      <figcaption>The work mat, with the phone number, put down before a cylinder job.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section wrap">
+    <h2>What the advert says</h2>
+    <p class="muted">This banner is the photo on the Google profile, added in April 2026. The details on this site match it.</p>
+    <figure class="banner-frame" style="margin-top:18px">
+      <Image src={banner} alt="JPS Gas and Heating Google profile banner with phone, email and Great Wakering." widths={[640, 1200, 1600]} sizes="100vw" />
+    </figure>
+  </section>
+</Base>
