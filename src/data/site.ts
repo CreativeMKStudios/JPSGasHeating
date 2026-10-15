@@ -2,7 +2,7 @@ export const site = {
   name: 'JPS Gas & Heating',
   shortName: 'JPS',
   tagline: 'Local. Reliable. Professional.',
-  url: 'https://www.jpsgasandheating.co.uk',
+  url: 'https://jpsgasandheating.surge.sh',
   engineer: 'Joe',
   established: 2004,
   yearsInTrade: 26,

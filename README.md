@@ -13,6 +13,6 @@ npm run build
 npm run preview
 ```
 
-The production URL in `astro.config.mjs` is `https://www.jpsgasandheating.co.uk`. Change `site` in `src/data/site.ts` and `astro.config.mjs` together if the real domain is different.
+The public site is `https://jpsgasandheating.surge.sh`. That address is set in `astro.config.mjs` and `src/data/site.ts`. Change both if you move the site to your own domain.
 
 `dist/` is the folder to upload. `public/robots.txt` points at the sitemap.

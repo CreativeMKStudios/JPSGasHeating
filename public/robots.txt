@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.jpsgasandheating.co.uk/sitemap-index.xml
+Sitemap: https://jpsgasandheating.surge.sh/sitemap-index.xml
