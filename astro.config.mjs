@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://www.jpsgasandheating.co.uk',
+  site: 'https://jpsgasandheating.surge.sh',
   trailingSlash: 'always',
   build: {
     format: 'directory',
